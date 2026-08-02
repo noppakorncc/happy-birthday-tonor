@@ -236,6 +236,92 @@
     </div>
   </div>
 
+  <div class="lock-modal" id="lockModal" role="dialog" aria-modal="true" aria-labelledby="lockTitle" hidden>
+    <div class="lock-card" id="lockCard">
+      <button class="lock-close" id="lockClose" type="button" aria-label="Close birthday lock">
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+
+      <i class="ri-sparkling-2-line lock-deco lock-deco-tl" aria-hidden="true"></i>
+      <i class="ri-heart-3-line lock-deco lock-deco-tr" aria-hidden="true"></i>
+      <i class="ri-heart-3-line lock-deco lock-deco-bl" aria-hidden="true"></i>
+      <i class="ri-sparkling-2-line lock-deco lock-deco-br" aria-hidden="true"></i>
+      <i class="ri-star-line lock-deco lock-deco-star" aria-hidden="true"></i>
+      <i class="ri-bow-tie-line lock-deco lock-deco-bow" aria-hidden="true"></i>
+
+      <div class="lock-icon" id="lockIcon" aria-hidden="true">
+        <img
+          class="lock-melody"
+          src="assets/melody_gif_asset_lock.gif"
+          alt=""
+        />
+        <i class="ri-lock-unlock-line lock-icon-badge"></i>
+      </div>
+
+      <h2 class="lock-title" id="lockTitle">BIRTHDAY LOCK</h2>
+      <p class="lock-sub">A little secret is waiting...</p>
+
+      <div class="lock-input-wrap">
+        <i class="ri-key-2-line" aria-hidden="true"></i>
+        <div class="lock-digits" id="lockDigits" role="group" aria-label="Enter your birthday in DDMM format">
+          <input
+            class="lock-digit"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="1"
+            placeholder="·"
+            autocomplete="off"
+            aria-label="First digit of your birthday, the day DDMM"
+          />
+          <input
+            class="lock-digit"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="1"
+            placeholder="·"
+            autocomplete="off"
+            aria-label="Second digit of your birthday, the day DDMM"
+          />
+          <input
+            class="lock-digit"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="1"
+            placeholder="·"
+            autocomplete="off"
+            aria-label="Third digit of your birthday, the month DDMM"
+          />
+          <input
+            class="lock-digit"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            maxlength="1"
+            placeholder="·"
+            autocomplete="off"
+            aria-label="Fourth digit of your birthday, the month DDMM"
+          />
+        </div>
+      </div>
+
+      <button class="lock-btn" id="lockUnlock" type="button" aria-label="Unlock the birthday gift">
+        <i class="ri-lock-unlock-line" aria-hidden="true"></i> UNLOCK
+      </button>
+
+      <p class="lock-error" id="lockError"></p>
+      <p class="lock-success" id="lockSuccess"></p>
+
+      <p class="lock-hint">คำใบ้: วันเกิดของต้นอ้อ มีทั้งหมด 4 ตัว ✦</p>
+      <button class="lock-tip" id="lockTip" type="button" aria-label="ขอคำใบ้เพิ่มเติม">
+        <i class="ri-lightbulb-flash-line" aria-hidden="true"></i> ขอคำใบ้
+      </button>
+      <p class="lock-tip-text" id="lockTipText" aria-live="polite"></p>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
