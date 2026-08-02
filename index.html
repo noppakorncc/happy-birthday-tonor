@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFF7FA" />
+  <title>Happy Birthday, Ton-Or</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Itim&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <noscript>
+    <style>
+      .page { position: static !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+      body { overflow: auto !important; }
+      .page { min-height: 100vh; }
+    </style>
+  </noscript>
+
+  <section class="page page-home is-active" id="page-home" aria-label="Home">
+    <img
+      class="page-character home-character"
+      src="assets/melody_gif_asset2.gif"
+      alt="A pastel pink My Melody character holding a wrapped birthday gift"
+    />
+
+    <div class="decor decor-home" aria-hidden="true">
+      <i class="ri-bow-tie-line decor-bow decor-tl"></i>
+      <i class="ri-bow-tie-line decor-bow decor-tr"></i>
+      <i class="ri-bow-tie-line decor-bow decor-bl"></i>
+      <i class="ri-sparkling-2-line decor-spark decor-ml"></i>
+      <i class="ri-star-line decor-star decor-mr"></i>
+      <i class="ri-heart-3-line decor-heart decor-h1"></i>
+      <i class="ri-heart-3-line decor-heart decor-h2"></i>
+    </div>
+
+    <div class="home-content">
+      <p class="eyebrow"><i class="ri-sparkling-2-line" aria-hidden="true"></i> MY MELODY <i class="ri-sparkling-2-line" aria-hidden="true"></i></p>
+      <h1 class="home-title">HAPPY<br />BIRTHDAY</h1>
+      <p class="home-subtitle">&ldquo;A little birthday world made especially for Ton-Or&rdquo;</p>
+
+      <button class="btn-primary home-gift" id="giftBtn" type="button" aria-label="Open the birthday gift">
+        <i class="ri-gift-line" aria-hidden="true"></i> OPEN THE GIFT
+      </button>
+    </div>
+  </section>
+
+  <section class="page page-birthday" id="page-birthday" aria-label="Birthday message">
+    <img
+      class="page-character birthday-character"
+      src="assets/melody_gif_asset1.gif"
+      alt="A dreamy pastel pink character with sparkling eyes, holding her hands near her chest"
+    />
+
+    <div class="decor decor-birthday" aria-hidden="true">
+      <i class="ri-bow-tie-line decor-bow decor-tl"></i>
+      <i class="ri-bow-tie-line decor-bow decor-tr"></i>
+      <i class="ri-bow-tie-line decor-bow decor-br"></i>
+      <i class="ri-sparkling-2-line decor-spark decor-ml"></i>
+      <i class="ri-star-line decor-star decor-mr"></i>
+      <i class="ri-heart-3-line decor-heart decor-h1"></i>
+    </div>
+
+    <div class="birthday-inner">
+      <div class="card">
+        <i class="ri-sparkling-line corner corner-tl" aria-hidden="true"></i>
+        <i class="ri-heart-3-line corner corner-tr" aria-hidden="true"></i>
+        <i class="ri-bow-tie-line corner corner-bl" aria-hidden="true"></i>
+        <i class="ri-sparkling-line corner corner-br" aria-hidden="true"></i>
+
+        <h2 class="card-title">Happy Birthday!</h2>
+        <p class="card-name">ต้นอ้อ</p>
+        <p class="card-note">สุขสันต์วันเกิดนะต้นอ้อ</p>
+
+        <div class="letter">
+          <p class="letter-text">ขอให้วันนี้เป็นวันที่เต็มไปด้วย
+รอยยิ้ม เสียงหัวเราะ และความสุข
+
+ขอให้มีแต่เรื่องดี ๆ เข้ามาในชีวิต
+ได้เจอคนดี ๆ และมีเรื่องให้ยิ้มได้ในทุกวัน
+
+ขอให้สิ่งที่ต้นอ้อหวังไว้
+ค่อย ๆ กลายเป็นจริงทีละอย่าง
+
+และขอให้ปีนี้เป็นอีกหนึ่งปี
+ที่เต็มไปด้วยความทรงจำดี ๆ</p>
+        </div>
+
+        <p class="card-signoff">from someone who made this little world for you</p>
+
+        <div class="secret-hint">
+          <p class="secret-hint-text">there's something hidden here...</p>
+          <button class="secret-heart" id="secretHeart" type="button" aria-label="Open secret message">
+            <i class="ri-heart-3-line" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn-primary next-btn" id="moreBtn" type="button" aria-label="Go to the final page, one more thing">
+        ONE MORE THING <i class="ri-arrow-right-line" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <button class="back-btn" type="button" data-go="0" aria-label="Go back to the home page">
+      <i class="ri-arrow-left-line" aria-hidden="true"></i>
+    </button>
+  </section>
+
+  <section class="page page-wish" id="page-wish" aria-label="Make a wish">
+    <img
+      class="page-character wish-character wish-character-left"
+      src="assets/melody_asset2.png"
+      alt="A pastel pink character resting beside the night sky, keeping you company while you make a wish"
+    />
+
+    <img
+      class="page-character wish-character wish-character-right"
+      src="assets/melody_asset1.png"
+      alt="A second pastel pink character resting on the other side of the night sky"
+    />
+
+    <div class="decor decor-wish" aria-hidden="true">
+      <i class="ri-bow-tie-line decor-bow decor-tl"></i>
+      <i class="ri-bow-tie-line decor-bow decor-tr"></i>
+      <i class="ri-bow-tie-line decor-bow decor-ml"></i>
+      <i class="ri-bow-tie-line decor-bow decor-mr"></i>
+      <i class="ri-star-line decor-star decor-h1"></i>
+      <i class="ri-heart-3-line decor-heart decor-h2"></i>
+    </div>
+
+    <div class="wish-inner">
+      <h2 class="wish-title">Make a wish...</h2>
+      <p class="wish-subtitle">&ldquo;Close your eyes and make a wish.&rdquo;</p>
+
+      <div class="cake-wrap" id="cakeWrap">
+        <div class="smoke-layer" id="smokeLayer" aria-hidden="true"></div>
+
+        <div class="cake">
+          <div class="cake-tier tier-bottom">
+            <div class="icing" aria-hidden="true"></div>
+          </div>
+          <div class="cake-tier tier-top">
+            <div class="icing" aria-hidden="true"></div>
+          </div>
+          <div class="cake-plate" aria-hidden="true"></div>
+
+          <div class="candle-wrap" aria-hidden="true">
+            <div class="candle"></div>
+            <div class="flame-halo"></div>
+            <div class="flame" id="flame"></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary wish-btn" id="wishBtn" type="button" aria-label="Make a wish and blow out the candle">
+        <i class="ri-sparkling-2-line" aria-hidden="true"></i> MAKE A WISH
+      </button>
+    </div>
+
+    <div class="wish-reveal" id="wishReveal" aria-live="polite">
+      <img
+        class="wish-gif"
+        id="wishGif"
+        src="assets/melody_gif_asset3.gif"
+        alt="A happy pastel pink character celebrating after the wish"
+      />
+      <p class="reveal-thai">ขอให้คำอธิษฐานของต้นอ้อเป็นจริงนะ</p>
+      <h2 class="reveal-title">HAPPY BIRTHDAY, TON-OR</h2>
+      <p class="reveal-sub">May your days always be soft, sweet &amp; pink.</p>
+    </div>
+
+    <button class="back-btn" type="button" data-go="1" aria-label="Go back to the birthday message">
+      <i class="ri-arrow-left-line" aria-hidden="true"></i>
+    </button>
+  </section>
+
+  <div class="transition-overlay" id="transitionOverlay" aria-hidden="true"></div>
+  <div class="stars-layer" id="stars" aria-hidden="true"></div>
+  <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
+  <div class="hearts-layer" id="hearts" aria-hidden="true"></div>
+  <div class="confetti-layer" id="confetti" aria-hidden="true"></div>
+
+  <button class="music-btn" id="musicBtn" type="button" aria-label="Play background music" title="Play music">
+    <i class="ri-volume-mute-line" id="musicIcon" aria-hidden="true"></i>
+    <span class="music-eq" id="musicEq" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
+
+  <div class="secret-modal" id="secretModal" role="dialog" aria-modal="true" aria-labelledby="secretText" hidden>
+    <div class="secret-card">
+      <button class="secret-close" id="secretClose" type="button" aria-label="Close secret message">
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+
+      <i class="ri-bow-tie-line secret-deco secret-deco-tl" aria-hidden="true"></i>
+      <i class="ri-heart-3-line secret-deco secret-deco-tr" aria-hidden="true"></i>
+      <i class="ri-sparkling-2-line secret-deco secret-deco-bl" aria-hidden="true"></i>
+      <i class="ri-heart-3-line secret-deco secret-deco-br" aria-hidden="true"></i>
+
+      <div class="secret-body" id="secretText">
+        <p class="secret-line">พี่ไม่ได้มีอะไรพิเศษให้มาก</p>
+        <p class="secret-line">พี่เลยทำเว็บไซต์นี้ให้</p>
+        <p class="secret-line">หวังว่าต้นอ้อจะชอบนะ</p>
+        <p class="secret-line">ปล. พี่นั่งหา assets My Melody</p>
+        <p class="secret-line">นานมาก ฮือออ 😭😭♡</p>
+
+        <div class="secret-pixel-wrap">
+          <img
+            class="secret-pixel"
+            src="assets/melody_gif_asset4.gif"
+            alt="Pixel art My Melody character holding a heart"
+          />
+          <p class="secret-pixel-heart">♡</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
