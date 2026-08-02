@@ -26,6 +26,24 @@
   var secretPixelWrap = document.querySelector(".secret-pixel-wrap");
   var secretOpen = false;
 
+  var lockModal = document.getElementById("lockModal");
+  var lockCard = document.getElementById("lockCard");
+  var lockClose = document.getElementById("lockClose");
+  var lockIcon = document.getElementById("lockIcon");
+  var lockDigitsWrap = document.getElementById("lockDigits");
+  var lockInputs = Array.prototype.slice.call(lockDigitsWrap.querySelectorAll(".lock-digit"));
+  var lockUnlockBtn = document.getElementById("lockUnlock");
+  var lockError = document.getElementById("lockError");
+  var lockSuccess = document.getElementById("lockSuccess");
+  var lockTipBtn = document.getElementById("lockTip");
+  var lockTipText = document.getElementById("lockTipText");
+  var lockTipLevel = 0;
+  var lockOpen = false;
+  var lockUnlocked = false;
+  var lockShakeId = null;
+
+  var BIRTHDAY_CODE = "0308";
+
   var currentPage = 0;
   var isTransitioning = false;
   var wished = false;
@@ -50,20 +68,29 @@
     starsLayer.classList.toggle("is-bright", index === 2);
   }
 
-  function openGift() {
+  function transitionToPage(index) {
     if (isTransitioning) return;
-    playMusic();
     if (reduceMotion) {
-      goToPage(1);
+      goToPage(index);
       return;
     }
     isTransitioning = true;
     transitionOverlay.classList.add("is-open");
     window.setTimeout(function () {
-      goToPage(1);
+      goToPage(index);
       transitionOverlay.classList.remove("is-open");
       isTransitioning = false;
     }, TRANSITION_MS);
+  }
+
+  function openGift() {
+    if (isTransitioning) return;
+    playMusic();
+    if (lockUnlocked) {
+      transitionToPage(1);
+    } else {
+      openLockModal();
+    }
   }
 
   /* ------------------------------------------------------------------
@@ -534,27 +561,210 @@
   }
 
   /* ------------------------------------------------------------------
+     Birthday Lock
+  ------------------------------------------------------------------ */
+
+  function openLockModal() {
+    if (lockUnlocked) return;
+    clearLockDigits();
+    lockError.classList.remove("is-shown");
+    lockSuccess.classList.remove("is-shown");
+    lockTipLevel = 0;
+    lockTipBtn.disabled = false;
+    lockTipText.textContent = "";
+    lockTipText.classList.remove("is-shown");
+    lockModal.hidden = false;
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () {
+        lockModal.classList.add("is-open");
+      });
+    });
+    lockOpen = true;
+    window.setTimeout(function () {
+      lockInputs[0].focus();
+    }, 90);
+  }
+
+  function closeLockModal() {
+    if (!lockOpen || lockUnlocked) return;
+    lockOpen = false;
+    lockModal.classList.remove("is-open");
+    lockModal.classList.remove("is-unlocked");
+    window.setTimeout(function () {
+      lockModal.hidden = true;
+    }, 560);
+    document.getElementById("giftBtn").focus();
+  }
+
+  function trapLockFocus(e) {
+    if (!lockOpen || e.key !== "Tab") return;
+    var focusables = lockCard.querySelectorAll("button, [href], [tabindex], input");
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  function showLockError() {
+    if (!lockError.innerHTML) {
+      lockError.innerHTML =
+        '<span class="error-en">Hmm... not quite ♡</span>' +
+        '<span class="error-th">ลองนึกถึงวันพิเศษของตัวเองดูนะ ✦</span>';
+    }
+    lockError.classList.add("is-shown");
+    lockSuccess.classList.remove("is-shown");
+  }
+
+  function shakeLock() {
+    lockIcon.classList.remove("is-shaking");
+    lockDigitsWrap.classList.remove("is-shaking");
+    void lockIcon.offsetWidth;
+    lockIcon.classList.add("is-shaking");
+    void lockDigitsWrap.offsetWidth;
+    lockDigitsWrap.classList.add("is-shaking");
+    window.clearTimeout(lockShakeId);
+    lockShakeId = window.setTimeout(function () {
+      lockIcon.classList.remove("is-shaking");
+      lockDigitsWrap.classList.remove("is-shaking");
+    }, 450);
+  }
+
+  function clearLockDigits() {
+    lockDigitsWrap.classList.remove("is-unlocked");
+    lockInputs.forEach(function (box) {
+      box.value = "";
+      box.disabled = false;
+      box.classList.remove("has-value");
+    });
+  }
+
+  function getLockCode() {
+    var i;
+    var code = "";
+    for (i = 0; i < lockInputs.length; i++) {
+      code += lockInputs[i].value;
+    }
+    return code;
+  }
+
+  function unlockSuccess() {
+    if (lockUnlocked) return;
+    lockUnlocked = true;
+
+    lockError.classList.remove("is-shown");
+    lockInputs.forEach(function (box) {
+      box.disabled = true;
+      box.blur();
+    });
+    lockDigitsWrap.classList.add("is-unlocked");
+    lockIcon.classList.remove("is-shaking");
+    lockIcon.classList.add("is-success");
+    lockTipBtn.disabled = true;
+
+    lockUnlockBtn.innerHTML = '<i class="ri-checkbox-circle-line"></i> KEY ACCEPTED';
+    lockUnlockBtn.disabled = true;
+
+    lockModal.classList.add("is-unlocked");
+
+    lockSuccess.innerHTML =
+      '<span class="success-en">KEY ACCEPTED ✦</span>' +
+      '<span class="success-note">The birthday gift is unlocked ♡</span>';
+    lockSuccess.classList.add("is-shown");
+
+    if (!reduceMotion) {
+      spawnHearts(4);
+      burstParticles(18);
+    }
+
+    window.setTimeout(function () {
+      lockModal.classList.remove("is-open");
+    }, 1000);
+
+    window.setTimeout(function () {
+      lockModal.hidden = true;
+      transitionToPage(1);
+    }, 1500);
+  }
+
+  function attemptUnlock() {
+    if (lockUnlocked || !lockOpen) return;
+    if (getLockCode() === BIRTHDAY_CODE) {
+      unlockSuccess();
+    } else {
+      showLockError();
+      shakeLock();
+    }
+  }
+
+  function showLockTip() {
+    if (lockUnlocked) return;
+    if (lockTipLevel === 0) {
+      lockTipText.textContent = "ตัวช่วย: เริ่มต้นด้วย 03 หาอีก 2 ตัวที่เหลือ คำใบ้คือเดือนเกิดนะ";
+    } else {
+      lockTipText.textContent = "เดือนเกิดคือ 08 เฉลยก็คือ 0308 — ต้นอ้อทำได้!";
+      lockTipBtn.disabled = true;
+    }
+    lockTipText.classList.add("is-shown");
+    lockTipLevel += 1;
+  }
+
+  function wireLockDigit(box, index) {
+    box.addEventListener("input", function () {
+      var clean = this.value.replace(/\D/g, "").slice(0, 1);
+      if (clean !== this.value) this.value = clean;
+      this.classList.toggle("has-value", clean.length === 1);
+      if (clean.length === 1 && lockInputs[index + 1]) {
+        lockInputs[index + 1].focus();
+      }
+    });
+    box.addEventListener("keydown", function (e) {
+      if (e.key === "Backspace" && this.value === "" && index > 0) {
+        e.preventDefault();
+        lockInputs[index - 1].focus();
+      }
+      if (e.key === "Enter") attemptUnlock();
+    });
+    box.addEventListener("paste", function (e) {
+      e.preventDefault();
+      var text = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "");
+      var i;
+      for (i = 0; i < text.length && i < lockInputs.length; i++) {
+        lockInputs[i].value = text.charAt(i);
+        lockInputs[i].classList.add("has-value");
+      }
+      if (text.length >= 4) {
+        attemptUnlock();
+      } else {
+        lockInputs[Math.min(text.length, lockInputs.length - 1)].focus();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Wire up
   ------------------------------------------------------------------ */
 
   function wireEvents() {
     document.getElementById("giftBtn").addEventListener("click", openGift);
     document.getElementById("moreBtn").addEventListener("click", function () {
-      if (reduceMotion) {
-        goToPage(2);
-        return;
-      }
-      if (isTransitioning) return;
-      isTransitioning = true;
-      transitionOverlay.classList.add("is-open");
-      window.setTimeout(function () {
-        goToPage(2);
-        transitionOverlay.classList.remove("is-open");
-        isTransitioning = false;
-      }, TRANSITION_MS);
+      transitionToPage(2);
     });
 
     wishBtn.addEventListener("click", makeWish);
+
+    lockUnlockBtn.addEventListener("click", attemptUnlock);
+    lockClose.addEventListener("click", closeLockModal);
+    lockTipBtn.addEventListener("click", showLockTip);
+    lockModal.addEventListener("click", function (e) {
+      if (e.target === lockModal) closeLockModal();
+    });
+    lockInputs.forEach(wireLockDigit);
 
     Array.prototype.forEach.call(document.querySelectorAll(".back-btn"), function (btn) {
       btn.addEventListener("click", function () {
@@ -569,8 +779,10 @@
       if (e.target === secretModal) closeSecret();
     });
     document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && lockOpen && !lockUnlocked) closeLockModal();
       if (e.key === "Escape" && secretOpen) closeSecret();
       trapSecretFocus(e);
+      trapLockFocus(e);
     });
   }
 
